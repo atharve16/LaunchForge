@@ -7,11 +7,11 @@ export const metadata: Metadata = { title: 'Dashboard', robots: { index: false, 
 type Profile = { fullName: string | null; email: string; role: string };
 export default async function DashboardPage() {
   let profile: Profile | undefined;
-  let unavailable = false;
+  let errorMessage: string | undefined;
   try {
     profile = await serverApiRequest<Profile>(endpoints.me);
-  } catch {
-    unavailable = true;
+  } catch (error) {
+    errorMessage = error instanceof Error ? error.message : 'The profile service is unavailable.';
   }
   return (
     <div>
@@ -24,11 +24,12 @@ export default async function DashboardPage() {
         online.
       </p>
       <div className="mt-8">
-        {unavailable ? (
-          <StatusPanel title="Profile service unavailable">
+        {errorMessage ? (
+          <StatusPanel title="Profile could not be loaded">
             <p>
-              Your Supabase session is active, but the NestJS API or database is not configured or
-              reachable. No account data is being simulated.
+              {errorMessage === 'NOT_AUTHENTICATED'
+                ? 'Your session is no longer valid. Please sign in again.'
+                : 'The authenticated profile service could not be reached. Please retry shortly; no account data is being simulated.'}
             </p>
           </StatusPanel>
         ) : (

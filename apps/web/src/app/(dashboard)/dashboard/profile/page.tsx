@@ -15,9 +15,12 @@ type Profile = {
 };
 export default async function ProfilePage() {
   let profile: Profile | undefined;
+  let errorMessage: string | undefined;
   try {
     profile = await serverApiRequest<Profile>(endpoints.me);
-  } catch {}
+  } catch (error) {
+    errorMessage = error instanceof Error ? error.message : 'The profile service is unavailable.';
+  }
   return (
     <div>
       <p className="text-accent font-mono text-xs tracking-[.16em] uppercase">Account</p>
@@ -42,10 +45,11 @@ export default async function ProfilePage() {
         </dl>
       ) : (
         <div className="mt-8">
-          <StatusPanel title="Profile unavailable">
+          <StatusPanel title="Profile could not be loaded">
             <p>
-              The profile API is not reachable. Your authentication session has not been replaced
-              with placeholder data.
+              {errorMessage === 'NOT_AUTHENTICATED'
+                ? 'Your session is no longer valid. Please sign in again.'
+                : 'The authenticated profile API could not be reached. Please retry shortly; no profile data is being simulated.'}
             </p>
           </StatusPanel>
         </div>

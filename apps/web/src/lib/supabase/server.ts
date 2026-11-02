@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { requireSupabaseEnv } from '@/config/env';
 import { applySupabaseCookiePolicy, getSupabaseCookieOptions } from './cookies';
 
-export async function createClient() {
+export async function createClient(options: { strictCookieWrites?: boolean } = {}) {
   const cookieStore = await cookies();
   const env = requireSupabaseEnv();
   return createServerClient(env.supabaseUrl, env.supabaseAnonKey, {
@@ -17,8 +17,9 @@ export async function createClient() {
           cookiesToSet.forEach(({ name, value, options }) =>
             cookieStore.set(name, value, applySupabaseCookiePolicy(options)),
           );
-        } catch {
+        } catch (error) {
           /* Server Components cannot write; proxy refreshes sessions. */
+          if (options.strictCookieWrites) throw error;
         }
       },
     },

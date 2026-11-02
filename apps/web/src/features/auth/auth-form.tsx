@@ -19,9 +19,9 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
   );
   const [notice, setNotice] = useState('');
 
-  async function provisionAndContinue() {
-    await apiRequest(endpoints.provisionProfile, { method: 'POST' }, true);
-    router.push(next as never);
+  async function provisionAndContinue(accessToken?: string) {
+    await apiRequest(endpoints.provisionProfile, { method: 'POST' }, true, accessToken);
+    router.replace(next as never);
     router.refresh();
   }
 
@@ -57,7 +57,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
       return;
     }
     try {
-      await provisionAndContinue();
+      await provisionAndContinue(result.data.session?.access_token);
     } catch {
       setError(
         'You are signed in, but your LaunchForge profile could not be prepared. Please retry.',

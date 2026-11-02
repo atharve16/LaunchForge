@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { IBM_Plex_Mono, Inter, Manrope } from 'next/font/google';
 import { getPublicEnv } from '@/config/env';
+import { AuthProvider } from '@/features/auth/auth-provider';
 import '@/styles/globals.css';
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope', display: 'swap' });
@@ -47,7 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${manrope.variable} ${inter.variable} ${mono.variable}`}>
       <body>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

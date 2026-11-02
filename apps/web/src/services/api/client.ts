@@ -17,15 +17,16 @@ export async function apiRequest<T>(
   path: string,
   init: RequestInit = {},
   authenticated = false,
+  accessToken?: string,
 ): Promise<T> {
   const headers = new Headers(init.headers);
   headers.set('Accept', 'application/json');
   if (init.body) headers.set('Content-Type', 'application/json');
   if (authenticated) {
-    const { data } = await createClient().auth.getSession();
-    if (!data.session?.access_token)
+    const token = accessToken ?? (await createClient().auth.getSession()).data.session?.access_token;
+    if (!token)
       throw new ApiError('Please sign in to continue.', 401, 'NOT_AUTHENTICATED');
-    headers.set('Authorization', `Bearer ${data.session.access_token}`);
+    headers.set('Authorization', `Bearer ${token}`);
   }
   const response = await fetch(`${getPublicEnv().apiUrl}${path}`, { ...init, headers });
   const payload = (await response.json().catch(() => null)) as

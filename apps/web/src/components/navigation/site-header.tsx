@@ -7,9 +7,13 @@ import { navItems } from '@/config/content';
 import { ButtonLink } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Logo } from '@/components/layout/logo';
+import { LogoutButton } from '@/features/auth/logout-button';
+import { useAuth } from '@/features/auth/auth-provider';
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const authenticated = !loading && Boolean(user);
   return (
     <header className="border-line/80 bg-canvas/92 sticky top-0 z-50 border-b backdrop-blur-xl">
       <Container className="flex min-h-18 items-center justify-between gap-6">
@@ -26,9 +30,18 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
-          <ButtonLink href="/login" variant="quiet">
-            Client login
-          </ButtonLink>
+          {authenticated ? (
+            <>
+              <ButtonLink href="/dashboard" variant="quiet">
+                Dashboard
+              </ButtonLink>
+              <LogoutButton />
+            </>
+          ) : !loading ? (
+            <ButtonLink href="/login" variant="quiet">
+              Client login
+            </ButtonLink>
+          ) : null}
           <ButtonLink href="/contact">Book a free call</ButtonLink>
         </div>
         <button
@@ -59,13 +72,26 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className="text-ink-secondary hover:bg-surface-alt rounded-xl px-4 py-3 font-medium"
-            >
-              Client login
-            </Link>
+            {authenticated ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  onClick={() => setOpen(false)}
+                  className="text-ink-secondary hover:bg-surface-alt rounded-xl px-4 py-3 font-medium"
+                >
+                  Dashboard
+                </Link>
+                <LogoutButton />
+              </>
+            ) : !loading ? (
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="text-ink-secondary hover:bg-surface-alt rounded-xl px-4 py-3 font-medium"
+              >
+                Client login
+              </Link>
+            ) : null}
             <ButtonLink href="/contact" className="mt-2 w-full">
               Book a free call
             </ButtonLink>

@@ -5,7 +5,6 @@ import {
   Check,
   MessageSquareText,
   ShieldCheck,
-  Sparkles,
   Target,
   Users,
 } from 'lucide-react';
@@ -27,9 +26,6 @@ export default function HomePage() {
         <div className="hero-grid absolute inset-0 opacity-70" aria-hidden="true" />
         <Container className="relative grid items-center gap-14 lg:grid-cols-[1.05fr_.95fr]">
           <div className="reveal">
-            <p className="border-line bg-canvas text-accent inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[11px] font-semibold tracking-[0.14em] uppercase">
-              <Sparkles className="size-3.5" /> Senior-led startup execution
-            </p>
             <h1 className="font-heading text-ink mt-7 max-w-3xl text-5xl leading-[1.03] font-semibold tracking-[-0.055em] text-balance sm:text-7xl">
               From first idea to <span className="text-accent">first users.</span>
             </h1>
