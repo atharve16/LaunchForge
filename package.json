@@ -1,0 +1,36 @@
+{
+  "name": "launchforge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LaunchForge service platform monorepo",
+  "packageManager": "npm@11.6.0",
+  "engines": {
+    "node": ">=22.18.0",
+    "npm": ">=11.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @launchforge/web",
+    "dev:web": "npm run dev --workspace @launchforge/web",
+    "dev:api": "npm run dev --workspace @launchforge/api",
+    "build": "npm run build --workspace @launchforge/shared && npm run build --workspace @launchforge/api && npm run build --workspace @launchforge/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:generate": "npm run db:generate --workspace @launchforge/api",
+    "db:migrate": "npm run db:migrate:dev --workspace @launchforge/api",
+    "db:migrate:deploy": "npm run db:migrate:deploy --workspace @launchforge/api"
+  },
+  "devDependencies": {
+    "@prisma/studio-core": "0.33.0",
+    "next": "16.4.3",
+    "prettier": "3.6.2",
+    "prettier-plugin-tailwindcss": "0.7.1",
+    "typescript": "5.9.3"
+  }
+}

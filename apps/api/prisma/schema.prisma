@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+  DEVELOPER
+}
+
+enum AccountStatus {
+  ACTIVE
+  DISABLED
+  DELETED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  CONVERTED
+  CLOSED
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum BlogPostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum PricingType {
+  QUOTE
+  INDICATIVE
+  HOURLY
+}
+
+model User {
+  id            String        @id @db.Uuid
+  email         String        @unique @db.VarChar(320)
+  fullName      String?       @map("full_name") @db.VarChar(160)
+  avatarUrl     String?       @map("avatar_url") @db.Text
+  phoneNumber   String?       @map("phone_number") @db.VarChar(32)
+  role          UserRole      @default(CLIENT)
+  accountStatus AccountStatus @default(ACTIVE) @map("account_status")
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  assignedLeads Lead[]     @relation("LeadAssignee")
+  projects      Project[]  @relation("ClientProjects")
+  blogPosts     BlogPost[] @relation("BlogAuthor")
+
+  @@index([role, accountStatus])
+  @@map("users")
+}
+
+model Lead {
+  id                 String     @id @default(uuid()) @db.Uuid
+  name               String     @db.VarChar(120)
+  email              String     @db.VarChar(320)
+  companyName        String?    @map("company_name") @db.VarChar(160)
+  startupStage       String     @map("startup_stage") @db.VarChar(40)
+  servicesNeeded     String[]   @map("services_needed")
+  budgetRange        String     @map("budget_range") @db.VarChar(60)
+  projectDescription String     @map("project_description") @db.Text
+  source             String     @default("WEBSITE") @db.VarChar(80)
+  status             LeadStatus @default(NEW)
+  assignedToId       String?    @map("assigned_to") @db.Uuid
+  submissionHash     String     @map("submission_hash") @db.VarChar(64)
+  createdAt          DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  assignedTo User? @relation("LeadAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([email, createdAt(sort: Desc)])
+  @@unique([submissionHash, email])
+  @@map("leads")
+}
+
+model Service {
+  id               String   @id @default(uuid()) @db.Uuid
+  name             String   @db.VarChar(120)
+  slug             String   @unique @db.VarChar(140)
+  shortDescription String   @map("short_description") @db.VarChar(280)
+  description      String   @db.Text
+  icon             String?  @db.VarChar(80)
+  isPublished      Boolean  @default(false) @map("is_published")
+  displayOrder     Int      @default(0) @map("display_order")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([isPublished, displayOrder])
+  @@map("services")
+}
+
+model EngagementPackage {
+  id              String      @id @default(uuid()) @db.Uuid
+  name            String      @db.VarChar(120)
+  slug            String      @unique @db.VarChar(140)
+  description     String      @db.Text
+  features        String[]
+  pricingType     PricingType @default(QUOTE) @map("pricing_type")
+  indicativePrice String?     @map("indicative_price") @db.VarChar(120)
+  isPublished     Boolean     @default(false) @map("is_published")
+  displayOrder    Int         @default(0) @map("display_order")
+
+  @@index([isPublished, displayOrder])
+  @@map("engagement_packages")
+}
+
+model Project {
+  id          String        @id @default(uuid()) @db.Uuid
+  name        String        @db.VarChar(160)
+  slug        String        @unique @db.VarChar(180)
+  description String?       @db.Text
+  clientId    String        @map("client_id") @db.Uuid
+  status      ProjectStatus @default(PLANNING)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  client User @relation("ClientProjects", fields: [clientId], references: [id], onDelete: Restrict)
+
+  @@index([clientId, status])
+  @@map("projects")
+}
+
+model CaseStudy {
+  id           String    @id @default(uuid()) @db.Uuid
+  title        String    @db.VarChar(180)
+  slug         String    @unique @db.VarChar(200)
+  summary      String    @db.VarChar(400)
+  challenge    String    @db.Text
+  solution     String    @db.Text
+  outcome      String    @db.Text
+  technologies String[]
+  thumbnailUrl String?   @map("thumbnail_url") @db.Text
+  isPublished  Boolean   @default(false) @map("is_published")
+  publishedAt  DateTime? @map("published_at") @db.Timestamptz(6)
+
+  @@index([isPublished, publishedAt(sort: Desc)])
+  @@map("case_studies")
+}
+
+model BlogPost {
+  id         String         @id @default(uuid()) @db.Uuid
+  title      String         @db.VarChar(180)
+  slug       String         @unique @db.VarChar(200)
+  excerpt    String         @db.VarChar(400)
+  content    String         @db.Text
+  coverImage String?        @map("cover_image") @db.Text
+  authorId   String         @map("author_id") @db.Uuid
+  status     BlogPostStatus @default(DRAFT)
+  publishedAt DateTime?     @map("published_at") @db.Timestamptz(6)
+  createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  author User @relation("BlogAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@map("blog_posts")
+}
