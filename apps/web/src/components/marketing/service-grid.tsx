@@ -13,29 +13,28 @@ const icons = {
 
 export function ServiceGrid() {
   return (
-    <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="mt-16">
       {services.map((service, index) => {
         const Icon = icons[service.slug as keyof typeof icons];
         return (
           <Link
             key={service.slug}
             href={`/services/${service.slug}` as never}
-            className="group border-line bg-surface hover:border-accent border-t p-7 transition hover:-translate-y-1 hover:shadow-[var(--shadow-soft)]"
+            className="service-row group"
           >
-            <div className="flex items-start justify-between gap-4">
-              <span className="bg-surface-alt text-accent grid size-11 place-items-center rounded-xl">
-                <Icon className="size-5" />
-              </span>
-              <span className="text-muted font-mono text-xs">0{index + 1}</span>
+            <span className="service-number">0{index + 1}</span>
+            <div>
+              <div className="mb-4 flex items-center gap-3">
+                <Icon className="text-accent size-4" aria-hidden="true" />
+                <span className="text-muted font-mono text-[10px] tracking-[0.14em] uppercase">{service.eyebrow}</span>
+              </div>
+              <h3 className="font-heading text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">{service.name}</h3>
+              <p className="text-muted mt-3 max-w-md leading-7">{service.summary}</p>
             </div>
-            <h3 className="font-heading text-ink mt-6 text-xl font-semibold tracking-[-0.025em]">
-              {service.name}
-            </h3>
-            <p className="text-muted mt-3 leading-7">{service.summary}</p>
-            <span className="text-accent mt-6 inline-flex items-center gap-2 text-sm font-semibold">
-              Explore service{' '}
-              <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </span>
+            <div className={`service-art service-art--${service.slug === 'idea-explosion' ? 'idea' : service.slug === 'web-development' ? 'web' : service.slug === 'mobile-development' ? 'mobile' : service.slug === 'ai-solutions' ? 'ai' : service.slug === 'devops' ? 'devops' : 'advisory'}`} aria-hidden="true">
+              <span>{service.name.replace('Startup ', '')}</span>
+            </div>
+            <ArrowUpRight className="text-muted size-5 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent" aria-hidden="true" />
           </Link>
         );
       })}

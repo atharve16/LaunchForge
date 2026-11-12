@@ -34,10 +34,10 @@ const columns = [
 export function SiteFooter() {
   return (
     <footer className="border-line bg-surface border-t">
-      <Container className="grid gap-10 py-14 md:grid-cols-[1.4fr_2fr]">
+      <Container className="grid gap-10 py-16 md:grid-cols-[1.4fr_2fr]">
         <div className="max-w-sm">
           <Logo />
-          <p className="text-muted mt-5 leading-7">
+          <p className="text-muted mt-5 max-w-xs leading-7">
             Senior-led product thinking and engineering execution for startups moving from first
             idea to first users.
           </p>

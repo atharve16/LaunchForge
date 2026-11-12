@@ -1,13 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  Check,
-  MessageSquareText,
-  ShieldCheck,
-  Target,
-  Users,
-} from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, CircleDot, Sparkles, Zap } from 'lucide-react';
 import { ButtonLink } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { SectionHeading } from '@/components/ui/section-heading';
@@ -19,157 +12,109 @@ import { FinalCta } from '@/components/marketing/final-cta';
 
 export const metadata: Metadata = { alternates: { canonical: '/' } };
 
+const principles = [
+  ['01', 'Senior-led', 'The people making the decisions stay close to the work.'],
+  ['02', 'AI-native', 'We use the newest tools where they create a real advantage.'],
+  ['03', 'Production-minded', 'The first release is built to meet the real world.'],
+] as const;
+
 export default function HomePage() {
   return (
-    <>
-      <section className="border-line bg-surface relative overflow-hidden border-b py-16 sm:py-24 lg:py-28">
-        <div className="hero-grid absolute inset-0 opacity-70" aria-hidden="true" />
-        <Container className="relative grid items-center gap-14 lg:grid-cols-[1.05fr_.95fr]">
-          <div className="reveal">
-            <h1 className="font-heading text-ink mt-7 max-w-3xl text-5xl leading-[1.03] font-semibold tracking-[-0.055em] text-balance sm:text-7xl">
-              From first idea to <span className="text-accent">first users.</span>
+    <div className="lf-page">
+      <section className="lf-hero relative flex items-center overflow-hidden border-b border-line">
+        <div className="hero-grid absolute inset-0 opacity-30" aria-hidden="true" />
+        <Container className="relative grid w-full items-center gap-14 py-20 lg:grid-cols-[1.02fr_.98fr] lg:py-24">
+          <div className="reveal z-10">
+            <p className="lf-eyebrow">LaunchForge / startup build partner</p>
+            <h1 className="font-heading mt-7 max-w-4xl text-[clamp(3.6rem,8vw,7.7rem)] font-semibold leading-[0.9] tracking-[-0.075em] text-balance">
+              From first sketch to <span className="text-accent">first users.</span>
             </h1>
-            <p className="text-ink-secondary mt-6 max-w-2xl text-lg leading-8 sm:text-xl">
-              Build your startup with experienced product and engineering leadership. From discovery
-              and prototyping to development, deployment and growth.
+            <p className="text-ink-secondary mt-8 max-w-xl text-lg leading-8 sm:text-xl">
+              We turn ambitious startup ideas into products ready for the real world.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/contact">
-                Book a free discovery call <ArrowRight className="size-4" />
+                Let&apos;s build <ArrowRight className="size-4" />
               </ButtonLink>
-              <ButtonLink href="/services" variant="secondary">
-                Explore our services
+              <ButtonLink href="/work" variant="secondary">
+                Explore our work <ArrowUpRight className="size-4" />
               </ButtonLink>
             </div>
-            <p className="text-muted mt-6 flex items-center gap-2 text-sm">
-              <Check className="text-success size-4" /> Start with the decision in front of you—not
-              a predetermined package.
-            </p>
+            <div className="text-muted mt-9 flex items-center gap-3 text-xs uppercase tracking-[0.12em]">
+              <span className="bg-accent size-2 rounded-full shadow-[0_0_14px_var(--brand-accent)]" />
+              Product thinking / engineering execution / clear ownership
+            </div>
           </div>
-          <div className="reveal reveal-delay">
+          <div className="reveal reveal-delay relative">
             <HeroVisual />
           </div>
         </Container>
+        <div className="text-muted absolute right-6 bottom-6 hidden font-mono text-[10px] tracking-[0.18em] uppercase lg:block">
+          Scroll to explore ↓
+        </div>
       </section>
 
-      <section className="border-line bg-canvas border-b py-10">
-        <Container>
-          <div className="text-ink-secondary grid gap-5 text-sm sm:grid-cols-3">
-            <div className="flex items-center gap-3">
-              <ShieldCheck className="text-accent size-5" />
-              <span>
-                <strong className="text-ink">Senior ownership</strong> across decisions and delivery
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Target className="text-accent size-5" />
-              <span>
-                <strong className="text-ink">Product discovery</strong> before engineering scope
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <MessageSquareText className="text-accent size-5" />
-              <span>
-                <strong className="text-ink">Visible milestones</strong> and direct communication
-              </span>
-            </div>
-          </div>
+      <section className="border-b border-line py-5">
+        <Container className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+          <p className="lf-eyebrow">Built for the messy middle</p>
+          <p className="text-muted text-sm">Idea → prototype → product → momentum</p>
+          <p className="text-accent font-mono text-xs tracking-[0.14em] uppercase">01 — 06</p>
         </Container>
       </section>
 
-      <section className="py-20 sm:py-28">
+      <section id="services" className="scroll-mt-20 py-24 sm:py-32">
         <Container>
-          <SectionHeading
-            eyebrow="Start where you are"
-            title="A clear path through founder uncertainty"
-            body="The right first move depends on what is already known. We shape the engagement around the next evidence or product milestone your team needs."
-          />
-          <div className="border-line bg-line mt-12 grid gap-px overflow-hidden rounded-3xl border lg:grid-cols-3">
-            {[
-              [
-                'I have an idea',
-                'Clarify the user, pressure-test assumptions and define a focused MVP.',
-                'Start with discovery',
-              ],
-              [
-                'I have a product plan',
-                'Turn agreed scope into a reliable web, mobile or AI-enabled release.',
-                'Plan the build',
-              ],
-              [
-                'I have a product in market',
-                'Improve architecture, delivery systems and technical leadership as you scale.',
-                'Strengthen production',
-              ],
-            ].map(([title, body, action], index) => (
-              <div key={title} className="bg-surface p-8">
-                <span className="text-accent font-mono text-xs">0{index + 1}</span>
-                <h3 className="font-heading mt-5 text-2xl font-semibold tracking-[-0.03em]">
-                  {title}
-                </h3>
-                <p className="text-muted mt-3 leading-7">{body}</p>
-                <Link
-                  href="/contact"
-                  className="text-accent mt-6 inline-flex items-center gap-2 text-sm font-semibold"
-                >
-                  {action} <ArrowRight className="size-4" />
-                </Link>
-              </div>
-            ))}
+          <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr]">
+            <div>
+              <p className="lf-eyebrow">What we build</p>
+              <h2 className="font-heading mt-5 max-w-lg text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl">
+                The next version of your company starts here.
+              </h2>
+            </div>
+            <p className="text-ink-secondary max-w-xl self-end text-lg leading-8 lg:justify-self-end">
+              One senior team across product, design and engineering. The right shape of help for
+              the decision in front of you.
+            </p>
           </div>
-        </Container>
-      </section>
-
-      <section className="border-line bg-surface border-y py-20 sm:py-28">
-        <Container>
-          <SectionHeading
-            eyebrow="Capabilities"
-            title="Product thinking and engineering, connected end to end"
-            body="Six focused services cover the path from deciding what to build through operating it in production."
-          />
           <ServiceGrid />
         </Container>
       </section>
 
-      <section className="py-20 sm:py-28">
+      <section className="border-y border-line bg-surface py-24 sm:py-32">
         <Container>
-          <SectionHeading
-            eyebrow="Why LaunchForge"
-            title="Accountability stays close to the work"
-          />
-          <div className="mt-12 grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
-            <div className="bg-brand rounded-3xl p-8 text-white sm:p-10">
-              <Users className="size-8 text-white/70" />
-              <h3 className="font-heading mt-8 text-3xl font-semibold tracking-[-0.035em]">
-                Senior judgment should not disappear after the sales call.
-              </h3>
-              <p className="mt-5 leading-8 text-white/70">
-                The operating model is designed around direct technical ownership, reviewable
-                milestones and decisions explained in founder language.
+          <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
+            <SectionHeading
+              eyebrow="Our process"
+              title="Make the next move obvious."
+              body="Every stage creates something real enough to react to. No black boxes, no theatre."
+            />
+            <div className="lf-eyebrow max-w-[12rem] leading-5 text-right">A clear path through uncertainty</div>
+          </div>
+          <ProcessExplorer />
+        </Container>
+      </section>
+
+      <section className="py-24 sm:py-32">
+        <Container>
+          <div className="grid gap-14 lg:grid-cols-[.9fr_1.1fr]">
+            <div>
+              <p className="lf-eyebrow">Why LaunchForge</p>
+              <h2 className="font-heading mt-5 max-w-xl text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl">
+                Less handoff. More momentum.
+              </h2>
+              <p className="text-ink-secondary mt-6 max-w-md text-lg leading-8">
+                We help founders move with the judgement of a product team that has been through
+                launch before.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                [
-                  'Product before output',
-                  'We challenge scope and make risks visible before code becomes expensive.',
-                ],
-                [
-                  'Production is part of the build',
-                  'Testing, security, deployment and handover belong in the definition of done.',
-                ],
-                [
-                  'Evidence over theatre',
-                  'Progress is shown through working increments and agreed acceptance criteria.',
-                ],
-                [
-                  'Built to transfer',
-                  'Architecture and operating knowledge are documented for the team that follows.',
-                ],
-              ].map(([title, body]) => (
-                <div key={title} className="border-accent bg-surface border-t-2 p-6">
-                  <h3 className="font-heading text-lg font-semibold">{title}</h3>
-                  <p className="text-muted mt-3 leading-7">{body}</p>
+            <div className="divide-line divide-y border-y border-line">
+              {principles.map(([number, title, body]) => (
+                <div key={title} className="grid gap-5 py-7 sm:grid-cols-[4rem_1fr]">
+                  <span className="text-accent font-mono text-xs">{number}</span>
+                  <div>
+                    <h3 className="font-heading text-2xl font-semibold tracking-[-0.03em]">{title}</h3>
+                    <p className="text-muted mt-2 max-w-md leading-7">{body}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -177,143 +122,88 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="border-line bg-surface border-y py-20 sm:py-28">
+      <section className="border-y border-line bg-surface py-24 sm:py-32">
         <Container>
-          <SectionHeading
-            eyebrow="The delivery loop"
-            title="Sketch → Prototype → Build → Launch → Grow"
-            body="Each stage produces a clear decision or working result before the next investment is made."
-          />
-          <ProcessExplorer />
-        </Container>
-      </section>
-
-      <section className="py-20 sm:py-28">
-        <Container>
-          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
             <SectionHeading
               eyebrow="Selected work"
-              title="Proof belongs here—not placeholders"
-              body="No client work has been approved for public display yet. Case studies will be published only with verified context, outcomes and permission."
+              title="Proof, when it is ready to be named."
+              body="We only publish client work with permission, context and verified outcomes."
             />
             <ButtonLink href="/work" variant="secondary">
-              View the case-study standard
+              Our evidence standard <ArrowUpRight className="size-4" />
             </ButtonLink>
           </div>
-          <div className="border-line bg-surface mt-12 rounded-3xl border border-dashed p-8 sm:p-12">
-            <p className="text-accent font-mono text-xs tracking-[0.15em] uppercase">
-              Portfolio awaiting approval
-            </p>
-            <h3 className="font-heading mt-4 max-w-2xl text-2xl font-semibold">
-              This section is intentionally honest while evidence is being prepared.
-            </h3>
-            <p className="text-muted mt-3 max-w-2xl leading-7">
-              Launch materials should never invent clients, logos, revenue lifts or delivery
-              outcomes. The reusable case-study data model and API are ready for approved content.
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-line bg-surface border-y py-20 sm:py-28">
-        <Container>
-          <SectionHeading
-            eyebrow="Engagement models"
-            title="Start with the amount of certainty you need"
-            body="All pricing is quote-based until scope and commercial terms are approved."
-          />
-          <div className="mt-12 grid gap-5 lg:grid-cols-5">
-            {engagements.map((item) => (
-              <div key={item.name} className="border-line bg-canvas rounded-2xl border p-5">
-                <h3 className="font-heading text-lg font-semibold">{item.name}</h3>
-                <p className="text-muted mt-3 text-sm leading-6">{item.bestFor}</p>
-                <p className="text-accent mt-5 font-mono text-[10px] tracking-[0.14em] uppercase">
-                  {item.cadence}
-                </p>
+          <div className="mt-12 grid gap-4 lg:grid-cols-[1.25fr_.75fr]">
+            <div className="relative min-h-[330px] overflow-hidden bg-[#171b23] p-8 sm:p-12">
+              <div className="absolute -right-20 -bottom-28 size-80 rounded-full border border-accent/30 shadow-[0_0_90px_rgba(255,113,61,0.14)]" />
+              <div className="absolute right-16 bottom-16 size-28 rounded-full bg-accent/20 blur-2xl" />
+              <div className="relative flex h-full flex-col justify-between">
+                <p className="lf-eyebrow">Portfolio / awaiting approval</p>
+                <div>
+                  <h3 className="font-heading max-w-md text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl">
+                    Real products deserve a real story.
+                  </h3>
+                  <p className="text-muted mt-4 max-w-md leading-7">
+                    This space is intentionally open until approved case studies are ready.
+                  </p>
+                </div>
               </div>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <ButtonLink href="/engagements" variant="secondary">
-              Compare engagement models
-            </ButtonLink>
+            </div>
+            <div className="border border-line p-8 sm:p-10">
+              <CircleDot className="text-accent size-7" />
+              <p className="text-muted mt-10 text-sm leading-7">
+                No invented client names, logos, testimonials, metrics or performance results.
+              </p>
+              <Link href="/work" className="text-accent mt-7 inline-flex items-center gap-2 text-sm font-semibold">
+                Read the standard <ArrowRight className="size-4" />
+              </Link>
+            </div>
           </div>
         </Container>
       </section>
 
-      <section className="py-20 sm:py-28">
+      <section className="py-24 sm:py-32">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-2">
+          <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
             <div>
-              <SectionHeading
-                eyebrow="The people behind the work"
-                title="A senior-led model, with the right specialists around the problem"
-                body="Named team profiles are not yet approved for publication. The operating promise is that each engagement has clear senior ownership and direct access to the people making product and engineering decisions."
-              />
-              <ButtonLink href="/about" variant="secondary" className="mt-7">
-                How the team operates
+              <p className="lf-eyebrow">Engagement models</p>
+              <h2 className="font-heading mt-5 max-w-md text-4xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl">
+                Start with the certainty you need.
+              </h2>
+              <p className="text-muted mt-6 max-w-sm leading-7">Every engagement is quote-based until scope and commercial terms are approved.</p>
+              <ButtonLink href="/engagements" variant="secondary" className="mt-8">
+                Compare models <ArrowUpRight className="size-4" />
               </ButtonLink>
             </div>
-            <div className="border-line bg-surface rounded-3xl border p-8">
-              <p className="text-accent font-mono text-xs tracking-[0.15em] uppercase">
-                Team information pending
-              </p>
-              <ul className="mt-6 space-y-4">
-                {[
-                  'Named engagement owner before work begins',
-                  'Responsibility and review cadence agreed up front',
-                  'Specialists added only where the product needs them',
-                  'Documentation designed for future internal ownership',
-                ].map((item) => (
-                  <li key={item} className="text-ink-secondary flex gap-3">
-                    <Check className="text-success mt-1 size-4 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div>
+              {engagements.map((item, index) => (
+                <div key={item.name} className="engagement-row">
+                  <span className="text-accent font-mono text-xs">0{index + 1}</span>
+                  <div>
+                    <h3 className="font-heading text-xl font-semibold tracking-[-0.025em]">{item.name}</h3>
+                    <p className="text-muted mt-1 text-sm">{item.bestFor}</p>
+                  </div>
+                  <span className="text-muted hidden font-mono text-[10px] tracking-[0.12em] uppercase sm:block">{item.cadence}</span>
+                  <Link href="/contact" className="text-accent inline-flex items-center gap-2 text-sm font-semibold">
+                    Talk to us <ArrowRight className="size-4" />
+                  </Link>
+                </div>
+              ))}
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="border-line bg-surface border-y py-20 sm:py-28">
-        <Container>
-          <SectionHeading eyebrow="FAQ" title="Useful answers before the first call" />
-          <div className="divide-line border-line mt-10 divide-y border-y">
-            {[
-              [
-                'How early is too early to speak?',
-                'An idea can be enough if you can explain the problem and who experiences it. Discovery is designed for uncertainty.',
-              ],
-              [
-                'Do you only build full MVPs?',
-                'No. A bounded discovery sprint, architecture review, bug fix or single feature may be the right starting point.',
-              ],
-              [
-                'Can you work with an existing technical team?',
-                'Yes. The engagement can add product definition, senior engineering capacity, mobile, AI, DevOps or technical leadership around an existing team.',
-              ],
-              [
-                'How much will an engagement cost?',
-                'Pricing is provided after scope, constraints and an appropriate engagement model are understood. Published figures are intentionally withheld until approved.',
-              ],
-              [
-                'Is the developer marketplace available?',
-                'No. The marketplace is a future phase. LaunchForge currently operates as a senior-led service partner.',
-              ],
-            ].map(([question, answer]) => (
-              <details key={question} className="group py-5">
-                <summary className="font-heading text-ink cursor-pointer list-none text-lg font-semibold marker:hidden">
-                  {question}
-                  <span className="text-accent float-right transition group-open:rotate-45">+</span>
-                </summary>
-                <p className="text-muted mt-3 max-w-3xl leading-7">{answer}</p>
-              </details>
-            ))}
-          </div>
+      <section className="border-t border-line py-10">
+        <Container className="grid gap-6 text-sm text-ink-secondary sm:grid-cols-3">
+          <div className="flex items-center gap-3"><Sparkles className="text-accent size-4" /> Senior ownership from day one</div>
+          <div className="flex items-center gap-3"><Zap className="text-accent size-4" /> AI-native where it helps</div>
+          <div className="flex items-center gap-3"><Check className="text-accent size-4" /> Built for the real world</div>
         </Container>
       </section>
+
       <FinalCta />
-    </>
+    </div>
   );
 }

@@ -3,8 +3,8 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 const styles = {
   primary:
-    'bg-accent text-white shadow-[0_10px_30px_rgba(49,95,232,0.24)] hover:-translate-y-0.5 hover:bg-brand',
-  secondary: 'border border-line bg-surface text-ink hover:border-accent hover:text-accent',
+    'bg-accent text-[#090b10] shadow-[0_14px_35px_rgba(255,113,61,0.2)] hover:-translate-y-0.5 hover:bg-[#ff946c]',
+  secondary: 'border border-line bg-transparent text-ink hover:border-accent hover:bg-surface-alt hover:text-ink',
   quiet: 'text-ink-secondary hover:bg-surface-alt hover:text-ink',
 } as const;
 
@@ -22,7 +22,7 @@ export function ButtonLink({
   return (
     <Link
       href={href as never}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition ${styles[variant]} ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${styles[variant]} ${className}`}
     >
       {children}
     </Link>
@@ -36,7 +36,7 @@ export function Button({
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: keyof typeof styles }) {
   return (
     <button
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${styles[variant]} ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${styles[variant]} ${className}`}
       {...props}
     />
   );

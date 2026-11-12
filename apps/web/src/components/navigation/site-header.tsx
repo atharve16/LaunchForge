@@ -15,15 +15,15 @@ export function SiteHeader() {
   const { user, loading } = useAuth();
   const authenticated = !loading && Boolean(user);
   return (
-    <header className="border-line/80 bg-canvas/92 sticky top-0 z-50 border-b backdrop-blur-xl">
-      <Container className="flex min-h-18 items-center justify-between gap-6">
+    <header className="border-line/70 bg-canvas/80 sticky top-0 z-50 border-b backdrop-blur-xl">
+      <Container className="flex min-h-20 items-center justify-between gap-6">
         <Logo />
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-ink-secondary hover:bg-surface-alt hover:text-ink rounded-lg px-3 py-2 text-sm font-medium transition"
+              className="text-ink-secondary hover:text-ink rounded-lg px-3 py-2 text-sm font-medium transition"
             >
               {item.label}
             </Link>
@@ -46,7 +46,7 @@ export function SiteHeader() {
         </div>
         <button
           type="button"
-          className="border-line bg-surface grid size-11 place-items-center rounded-xl border lg:hidden"
+          className="border-line bg-surface grid size-11 place-items-center rounded-full border lg:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="mobile-navigation"
@@ -58,7 +58,7 @@ export function SiteHeader() {
       {open ? (
         <nav
           id="mobile-navigation"
-          className="border-line bg-surface border-t p-5 lg:hidden"
+          className="border-line bg-canvas border-t p-5 lg:hidden"
           aria-label="Mobile navigation"
         >
           <div className="mx-auto grid max-w-7xl gap-1">

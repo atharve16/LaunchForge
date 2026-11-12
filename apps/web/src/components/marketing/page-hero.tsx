@@ -10,16 +10,13 @@ export function PageHero({
   body: string;
 }) {
   return (
-    <section className="border-line bg-surface relative overflow-hidden border-b py-18 sm:py-24">
-      <div className="hero-grid absolute inset-0 opacity-70" aria-hidden="true" />
+    <section className="relative overflow-hidden border-b border-line py-24 sm:py-32">
+      <div className="hero-grid absolute inset-0 opacity-25" aria-hidden="true" />
+      <div className="absolute -top-40 right-0 size-[32rem] rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
       <Container className="relative">
-        <p className="text-accent font-mono text-xs font-semibold tracking-[0.18em] uppercase">
-          {eyebrow}
-        </p>
-        <h1 className="font-heading text-ink mt-5 max-w-4xl text-4xl font-semibold tracking-[-0.045em] text-balance sm:text-6xl">
-          {title}
-        </h1>
-        <p className="text-ink-secondary mt-6 max-w-3xl text-lg leading-8 sm:text-xl">{body}</p>
+        <p className="lf-eyebrow">{eyebrow}</p>
+        <h1 className="font-heading mt-6 max-w-5xl text-5xl font-semibold leading-[0.95] tracking-[-0.065em] text-balance sm:text-7xl">{title}</h1>
+        <p className="text-ink-secondary mt-7 max-w-2xl text-lg leading-8 sm:text-xl">{body}</p>
       </Container>
     </section>
   );
