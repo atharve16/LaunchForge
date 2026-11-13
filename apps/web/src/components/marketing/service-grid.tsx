@@ -1,21 +1,39 @@
-import { ArrowUpRight, Bot, CloudCog, Compass, Laptop, Lightbulb, Smartphone } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { services } from '@/config/content';
 
-const icons = {
-  'idea-explosion': Lightbulb,
-  'web-development': Laptop,
-  'mobile-development': Smartphone,
-  'ai-solutions': Bot,
-  devops: CloudCog,
-  'startup-advisory': Compass,
+const servicePresentation: Record<string, { name: string; summary: string }> = {
+  'idea-explosion': {
+    name: 'Idea Discovery & Product Strategy',
+    summary: 'Find the sharpest first product before the build begins.',
+  },
+  'web-development': {
+    name: 'Web Development',
+    summary: 'Fast, maintainable web products built for real users.',
+  },
+  'mobile-development': {
+    name: 'Mobile Development',
+    summary: 'Focused mobile experiences with a path to release.',
+  },
+  'ai-solutions': {
+    name: 'AI Solutions',
+    summary: 'Practical AI features integrated where they create value.',
+  },
+  devops: {
+    name: 'Deployment & DevOps',
+    summary: 'A clear, reliable route from code change to production.',
+  },
+  'startup-advisory': {
+    name: 'Fractional CTO & Startup Advisory',
+    summary: 'Experienced technical judgment for the decisions that compound.',
+  },
 };
 
 export function ServiceGrid() {
   return (
     <div className="mt-16">
       {services.map((service, index) => {
-        const Icon = icons[service.slug as keyof typeof icons];
+        const presentation = servicePresentation[service.slug] ?? service;
         return (
           <Link
             key={service.slug}
@@ -24,15 +42,8 @@ export function ServiceGrid() {
           >
             <span className="service-number">0{index + 1}</span>
             <div>
-              <div className="mb-4 flex items-center gap-3">
-                <Icon className="text-accent size-4" aria-hidden="true" />
-                <span className="text-muted font-mono text-[10px] tracking-[0.14em] uppercase">{service.eyebrow}</span>
-              </div>
-              <h3 className="font-heading text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">{service.name}</h3>
-              <p className="text-muted mt-3 max-w-md leading-7">{service.summary}</p>
-            </div>
-            <div className={`service-art service-art--${service.slug === 'idea-explosion' ? 'idea' : service.slug === 'web-development' ? 'web' : service.slug === 'mobile-development' ? 'mobile' : service.slug === 'ai-solutions' ? 'ai' : service.slug === 'devops' ? 'devops' : 'advisory'}`} aria-hidden="true">
-              <span>{service.name.replace('Startup ', '')}</span>
+              <h3 className="font-heading text-xl font-semibold tracking-[-0.035em] sm:text-2xl">{presentation.name}</h3>
+              <p className="text-muted mt-2 max-w-md text-sm leading-6 sm:text-base">{presentation.summary}</p>
             </div>
             <ArrowUpRight className="text-muted size-5 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent" aria-hidden="true" />
           </Link>
