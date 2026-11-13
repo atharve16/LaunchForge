@@ -90,6 +90,90 @@ textarea {
   overflow: hidden;
 }
 
+.fixed-forge-scene {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fixed-forge-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.94;
+}
+
+.fixed-forge-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(9, 11, 16, 0.92) 0%, rgba(9, 11, 16, 0.46) 36%, rgba(9, 11, 16, 0.16) 70%, rgba(9, 11, 16, 0.76) 100%),
+    linear-gradient(0deg, rgba(9, 11, 16, 0.82), transparent 26%, transparent 74%, rgba(9, 11, 16, 0.44));
+}
+
+.lf-home-content {
+  position: relative;
+  z-index: 1;
+}
+
+.lf-scene {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.lf-scene--hero {
+  min-height: min(920px, 100dvh);
+}
+
+.lf-scene--services {
+  min-height: 135dvh;
+  align-items: flex-start;
+  padding-block: 18vh;
+}
+
+.lf-scene--process,
+.lf-scene--work,
+.lf-scene--why,
+.lf-scene--engagement {
+  min-height: 110dvh;
+}
+
+.lf-scene--cta {
+  min-height: 85dvh;
+}
+
+.lf-glass-strip {
+  border-block: 1px solid rgba(243, 241, 234, 0.13);
+  background: rgba(9, 11, 16, 0.42);
+  backdrop-filter: blur(8px);
+}
+
+.lf-panel {
+  border: 1px solid rgba(243, 241, 234, 0.14);
+  background: rgba(16, 19, 26, 0.48);
+  backdrop-filter: blur(12px);
+}
+
+.lf-outline-word {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(243, 241, 234, 0.36);
+}
+
+.lf-display {
+  font-size: clamp(3.8rem, 10vw, 9.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.08em;
+}
+
 .lf-eyebrow {
   color: var(--brand-accent);
   font-family: var(--font-ibm-plex-mono), monospace;
@@ -319,6 +403,11 @@ textarea {
   .lf-hero { min-height: 780px; }
   .hero-orbit { width: min(100%, 430px); }
   .hero-satellite { font-size: 0.55rem; }
+  .fixed-forge-canvas { opacity: 0.72; }
+  .fixed-forge-vignette { background: linear-gradient(90deg, rgba(9, 11, 16, 0.9), rgba(9, 11, 16, 0.34) 70%, rgba(9, 11, 16, 0.78)); }
+  .lf-scene--hero { min-height: 100dvh; }
+  .lf-scene--services { min-height: 150dvh; padding-block: 14vh; }
+  .lf-scene--process, .lf-scene--work, .lf-scene--why, .lf-scene--engagement { min-height: 100dvh; }
   .service-row { grid-template-columns: 2.4rem minmax(0, 1fr) auto; min-height: 0; padding-block: 1.5rem; }
   .service-row:hover { padding-inline: 0.5rem; }
   .service-art { grid-column: 2 / -1; grid-row: 2; min-height: 110px; }

@@ -4,7 +4,7 @@ import { Container } from '@/components/ui/container';
 
 export function FinalCta() {
   return (
-    <section className="relative overflow-hidden border-t border-line bg-accent py-24 text-[#090b10] sm:py-32">
+    <section className="lf-scene lf-scene--cta relative overflow-hidden border-t border-line bg-accent/85 py-24 text-[#090b10] sm:py-32">
       <div className="absolute -top-32 -right-24 size-[28rem] rounded-full border border-[#090b10]/15" aria-hidden="true" />
       <div className="absolute -right-16 -bottom-64 size-[32rem] rounded-full border border-[#090b10]/15" aria-hidden="true" />
       <Container className="relative">
